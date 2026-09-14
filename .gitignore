@@ -1,0 +1,28 @@
+# Dependencies
+node_modules
+*/node_modules
+package-lock.json
+
+# Production builds
+dist
+client/dist
+dist-ssr
+*.local
+
+# Environment files
+.env
+server/.env
+.env*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# OS & Editor artifacts
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

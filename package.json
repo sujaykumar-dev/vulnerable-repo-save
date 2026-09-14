@@ -1,0 +1,14 @@
+{
+  "name": "vulnerable-mern-benchmark",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lightweight deliberately vulnerable MERN benchmark for DAST and automated security AI remediation",
+  "scripts": {
+    "install:all": "npm --prefix server install && npm --prefix client install",
+    "postinstall": "npm run install:all",
+    "start": "node server/server.js",
+    "client": "npm --prefix client dev",
+    "server": "npm --prefix server start",
+    "build": "npm --prefix client run build"
+  }
+}

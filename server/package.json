@@ -1,0 +1,17 @@
+{
+  "name": "vulnerable-mern-server",
+  "version": "1.0.0",
+  "description": "Vulnerable MERN backend for DAST and automated security AI benchmarks",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.3.4"
+  }
+}
