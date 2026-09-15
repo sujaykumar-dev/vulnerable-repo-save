@@ -213,7 +213,7 @@ export default function App() {
         {activeTab === 'home' && (
           <div>
             <div className="hero">
-              <h1>CyberCorp Security Solutions</h1>
+              <h1>Welcome to Vulnerable Shop</h1>
               <p>
                 Enterprise hardware and automated security tools. Test our search bar below to verify Reflected XSS handling.
               </p>

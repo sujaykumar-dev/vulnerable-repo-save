@@ -6,7 +6,7 @@ const path = require('path');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5500;
 
 // ============================================================================
 // 1. MISSING HTTP SECURITY DIRECTIVES (Deliberately Omitted for DAST & SAVE AI)
@@ -284,18 +284,16 @@ app.get('/api/products', (req, res) => {
   res.json({ success: true, products: mockProducts });
 });
 
-// Root route
-app.get('/', (req, res) => {
-  res.send(`
-    <h1>Vulnerable MERN Security Benchmark API</h1>
-    <p>Educational testing backend for DAST and automated remediation bots.</p>
-    <ul>
-      <li><a href="/api/debug/system-info">/api/debug/system-info</a> (Information Disclosure)</li>
-      <li><a href="/api/search?q=%3Cscript%3Ealert('XSS')%3C/script%3E">/api/search</a> (Reflected XSS)</li>
-      <li><a href="/api/feedback">/api/feedback</a> (Stored XSS)</li>
-      <li><a href="/api/users/1">/api/users/1</a> (IDOR)</li>
-    </ul>
-  `);
+// Serve static React client bundle
+const clientDistPath = path.join(__dirname, '../client/dist');
+app.use(express.static(clientDistPath));
+
+// Fallback for SPA routing while keeping /api and /search working
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api') || req.path === '/search') {
+    return next();
+  }
+  res.sendFile(path.join(clientDistPath, 'index.html'));
 });
 
 // Start Server
