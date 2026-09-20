@@ -296,8 +296,12 @@ app.get('*', (req, res, next) => {
   res.sendFile(path.join(clientDistPath, 'index.html'));
 });
 
-// Start Server
-app.listen(PORT, () => {
-  console.log(`[+] Vulnerable Benchmark Server listening on port ${PORT}`);
-  console.log(`[!] Warning: Deliberately missing HTTP security directives for DAST benchmarking.`);
-});
+// Start Server only if run directly (local development)
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`[+] Vulnerable Benchmark Server listening on port ${PORT}`);
+    console.log(`[!] Warning: Deliberately missing HTTP security directives for DAST benchmarking.`);
+  });
+}
+
+module.exports = app;

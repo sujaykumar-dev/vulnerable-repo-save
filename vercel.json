@@ -1,13 +1,19 @@
 {
   "version": 2,
+  "buildCommand": "npm run build",
+  "outputDirectory": "client/dist",
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/server/server.js"
+      "destination": "/api/index.js"
+    },
+    {
+      "source": "/search",
+      "destination": "/api/index.js"
     },
     {
       "source": "/(.*)",
-      "destination": "/client/dist/$1"
+      "destination": "/index.html"
     }
   ],
   "headers": [
