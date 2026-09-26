@@ -190,12 +190,10 @@ app.post('/api/feedback', (req, res) => {
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
 
-  if (!username || password === undefined) {
-    return res.status(400).json({ error: 'Username and password are required' });
+  if (!username || password === undefined || typeof username !== 'string' || typeof password !== 'string') {
+    return res.status(400).json({ error: 'Username and password are required and must be strings' });
   }
 
-  // VULNERABILITY: Direct usage of req.body objects in query matching without sanitization
-  // If password is { "$ne": null }, matchesMongoQuery will evaluate true for any user with password != null!
   const user = mockUsers.find(u => {
     const userMatch = matchesMongoQuery(u.username, username);
     const passMatch = matchesMongoQuery(u.password, password);
@@ -206,10 +204,6 @@ app.post('/api/login', (req, res) => {
     return res.status(401).json({ error: 'Invalid credentials' });
   }
 
-  // VULNERABILITY: Insecure Session Cookie
-  // Missing httpOnly (vulnerable to document.cookie theft via XSS)
-  // Missing secure (transmitted over plaintext HTTP)
-  // Permissive sameSite
   const sessionToken = `session_${user.id}_${Date.now()}`;
   res.cookie('auth_token', sessionToken, {
     httpOnly: false, // Insecure
