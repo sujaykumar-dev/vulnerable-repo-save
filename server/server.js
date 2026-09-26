@@ -212,9 +212,9 @@ app.post('/api/login', (req, res) => {
   // Permissive sameSite
   const sessionToken = `session_${user.id}_${Date.now()}`;
   res.cookie('auth_token', sessionToken, {
-    httpOnly: false, // Insecure
-    secure: false,   // Insecure
-    sameSite: 'none' // Insecure
+    httpOnly: true,
+    secure: true,
+    sameSite: 'lax'
   });
 
   // Return user info excluding raw password
