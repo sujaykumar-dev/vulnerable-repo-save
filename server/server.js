@@ -190,16 +190,12 @@ app.post('/api/feedback', (req, res) => {
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
 
-  if (!username || password === undefined) {
+  if (!username || password === undefined || typeof username !== 'string' || (typeof password !== 'string' && typeof password !== 'number')) {
     return res.status(400).json({ error: 'Username and password are required' });
   }
 
-  // VULNERABILITY: Direct usage of req.body objects in query matching without sanitization
-  // If password is { "$ne": null }, matchesMongoQuery will evaluate true for any user with password != null!
   const user = mockUsers.find(u => {
-    const userMatch = matchesMongoQuery(u.username, username);
-    const passMatch = matchesMongoQuery(u.password, password);
-    return userMatch && passMatch;
+    return u.username === username && u.password === String(password);
   });
 
   if (!user) {
